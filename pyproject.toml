@@ -5,18 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tradingchassis-core-runtime"
 version = "0.1.0"
-description = "Runtime execution and Kubernetes orchestration layer for the core with reproducible environments and deterministic backtesting."
+description = "Runtime and Kubernetes orchestration layer for TradingChassis Core with reproducible environments and deterministic Backtesting."
 readme = "README.md"
 requires-python = ">=3.11"
-authors = [{ name = "tradingeng@protonmail.com" }]
+authors = [{ name = "TradingChassis Core Runtime Contributors", email = "tradingeng@protonmail.com" }]
 license = { text = "MIT" }
-
-classifiers = [
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.11",
-  "License :: OSI Approved :: MIT License",
-  "Operating System :: OS Independent"
-]
 
 dependencies = [
   "hftbacktest>=2,<3",

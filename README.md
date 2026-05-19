@@ -1,4 +1,14 @@
-# TradingChassis — Core Runtime
+# Status: Legacy / Architectural Exploration
+
+This repository is no longer part of the active direction of TradingChassis.
+
+It explored deterministic Event-driven trading semantics, Intent handling,
+risk gates, and Execution Control boundaries as part of an earlier design phase.
+
+TradingChassis has since pivoted away from implementing a custom trading engine.
+This repository remains public as historical context and proof of architectural exploration.
+
+# TradingChassis Core Runtime
 
 ![CI](https://github.com/TradingChassis/core-runtime/actions/workflows/tests.yaml/badge.svg)
 ![Python](https://img.shields.io/badge/python-3.11+-blue)
@@ -9,8 +19,6 @@ Execution and orchestration environment around Core.
 Core Runtime consumes Core (`tradingchassis_core`) and provides local/cluster entrypoints,
 configuration, adapter integration, runtime packaging, and reproducible execution workflows.
 
----
-
 ## Overview
 
 Core Runtime is the runtime layer for executing Core semantics in concrete environments.
@@ -19,8 +27,6 @@ Core Runtime is the runtime layer for executing Core semantics in concrete envir
 - runtime entrypoints for orchestration flows
 - reproducible dependency/runtime packaging
 - CI and infrastructure wiring for deployment workflows
-
----
 
 ## What Core Runtime is
 
@@ -32,16 +38,12 @@ Core Runtime provides:
 - orchestration integration (Argo/Kubernetes)
 - runtime validation and smoke/test workflows
 
----
-
 ## What Core Runtime is not
 
 Core Runtime is not the semantic source of truth for Core concepts.
 
 It consumes Core and should not redefine canonical terms such as Event, Event Stream, Processing
 Order, State, or Risk Engine.
-
----
 
 ## Current local hftbacktest usability status
 
@@ -59,8 +61,6 @@ Default output location:
 
 This confirms current local usability and does not claim full canonical Event Stream completion.
 
----
-
 ## Quick start
 
 From the `core-runtime` repository root:
@@ -70,8 +70,6 @@ python -m pip install -e .
 python -m core_runtime.local.backtest --config core_runtime/local/bt_config_local.json
 ```
 
----
-
 ## Entrypoint matrix
 
 | Mode | Entrypoint | Command shape | Notes |
@@ -79,8 +77,6 @@ python -m core_runtime.local.backtest --config core_runtime/local/bt_config_loca
 | Local backtest | `core_runtime/local/backtest.py` | `python -m core_runtime.local.backtest --config core_runtime/local/bt_config_local.json` | Main local runner. |
 | Argo plan/run orchestration | `core_runtime/backtest/runtime/entrypoint.py` | `python -m core_runtime.backtest.runtime.entrypoint --config core_runtime/argo/bt_config_argo.json --plan` | Planner and sweep-context emitter for Argo flow. |
 | Sweep worker | `core_runtime/backtest/runtime/run_sweep.py` | `python -m core_runtime.backtest.runtime.run_sweep --context <path-to-sweep-json>` | Executes one sweep context. |
-
----
 
 ## Adapter capability model
 
@@ -90,15 +86,11 @@ python -m core_runtime.local.backtest --config core_runtime/local/bt_config_loca
 | Runtime-local compatibility handling | Active | Raw venue order snapshots stay in runtime bookkeeping; Core receives canonical `OrderExecutionFeedbackEvent` (account-level only). |
 | Deferred capabilities | Deferred | Runtime `FillEvent` ingress, `ExecutionFeedbackRecordSource`, replay/storage/Event Stream persistence, `ProcessingContext` |
 
----
-
 ## Current hftbacktest capability map
 
 - Local hftbacktest flow is usable for current transitional runtime paths.
 - Compatibility mechanisms remain in place for post-submission progression.
 - Deferred capabilities are intentionally not presented as shipped runtime behavior.
-
----
 
 ## Canonical runtime paths
 
@@ -106,15 +98,11 @@ python -m core_runtime.local.backtest --config core_runtime/local/bt_config_loca
 - `OrderSubmittedEvent`
 - `ControlTimeEvent`
 
----
-
 ## Runtime-local compatibility handling
 
 - snapshot-based post-submission bookkeeping remains runtime-local
 - Core ingestion uses account-level `OrderExecutionFeedbackEvent`
 - no snapshot row payload is pushed into Core
-
----
 
 ## Deferred capabilities
 
@@ -123,8 +111,6 @@ python -m core_runtime.local.backtest --config core_runtime/local/bt_config_loca
 - replay/storage/Event Stream persistence
 - `ProcessingContext`
 
----
-
 ## Package and import names
 
 - Human-facing concept name: Core Runtime
@@ -132,8 +118,6 @@ python -m core_runtime.local.backtest --config core_runtime/local/bt_config_loca
 - Python import package: `core_runtime`
 - Core distribution/project name: `tradingchassis-core`
 - Core Python import package: `tradingchassis_core`
-
----
 
 ## Repository structure
 
@@ -147,8 +131,6 @@ scripts/                    Build/validation helper scripts
 tests/                      Runtime tests and deterministic fixtures
 ```
 
----
-
 ## Configuration
 
 Primary local config:
@@ -158,8 +140,6 @@ Primary local config:
 
 Note: local JSON configs use cwd-relative paths for `tests/data/...` inputs and `.runtime/...`
 outputs. The supported default workflow is to run commands from the `core-runtime` repo root.
-
----
 
 ## Development setup
 
@@ -180,8 +160,6 @@ python -m pytest -q core-runtime/tests
 python -m pytest -q core/tests
 ```
 
----
-
 ## Test commands
 
 From `core-runtime` root:
@@ -198,15 +176,11 @@ python -m pytest -q core-runtime/tests
 python -m pytest -q core/tests
 ```
 
----
-
 ## Relationship to Core
 
 Core provides deterministic semantics and domain contracts.
 
 Core Runtime provides execution environments and orchestration around those semantics.
-
----
 
 ## Dependency pinning and reproducibility
 
@@ -226,8 +200,6 @@ Artifacts:
 
 - `requirements.txt`
 - `requirements-dev.txt`
-
----
 
 ## Infrastructure notes
 
@@ -320,8 +292,6 @@ Tracking-only policy:
 - MLflow artifact storage is intentionally unsupported in this setup.
 - If a client starts calling artifact APIs (for example `mlflow.log_artifact(...)`), treat failures as expected until artifact storage is intentionally added.
 
----
-
 ## Scripts
 
 | Script | Purpose |
@@ -330,15 +300,11 @@ Tracking-only policy:
 | `post-create.sh` | Dev container bootstrap |
 | `check.sh` | Local validation helpers |
 
----
-
 ## Documentation index
 
 - Runtime adapter design: `docs/venue-adapter-abstraction-design-v1.md`
 - Shared terminology source of truth: `docs/docs/00-guides/terminology.md`
 - Core library scope: `core/README.md`
-
----
 
 ## License and versioning
 
